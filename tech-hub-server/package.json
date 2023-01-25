@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "pord": "nodemon index.js"
+    "dev": "NODE_ENV=development nodemon index.js",
+    "prod": "NODE_ENV=production nodemon index.js"
   },
   "author": "Muntashir Wahid",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^5.13.15"
+    "mongoose": "^5.13.15",
+    "morgan": "^1.10.0"
   }
 }
