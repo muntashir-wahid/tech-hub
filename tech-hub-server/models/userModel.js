@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
+  },
   email: {
     type: String,
     required: [true, "User must have an email"],
@@ -26,6 +31,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "User must have a password"],
     minLength: [8, "Password must have more or equal 8 charecters"],
+    select: false,
   },
   confirmPassword: {
     type: String,
@@ -79,10 +85,17 @@ userSchema.pre("save", async function (next) {
 
 // DELETE PASSWORD FILED AFTER CREATING A DOCUMENT
 userSchema.post("save", function (doc, next) {
+  // Delete mongoose default field and password
   doc.__v = undefined;
   doc.password = undefined;
+
   next();
 });
+
+// DEFINE A INSTANCE METHOD ON USER SCHEMA TO CHECK PASSWORD
+userSchema.methods.correctPassword = async function (candidatePass, userPass) {
+  return await bcrypt.compare(candidatePass, userPass);
+};
 
 const User = mongoose.model("User", userSchema);
 

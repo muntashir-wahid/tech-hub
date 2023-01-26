@@ -24,4 +24,11 @@ app.get("/", (req, res) => {
 // ROUTES MOUNTING
 app.use("/api/v1/users", userRouter);
 
+app.all("*", (req, res) => {
+  res.status(404).json({
+    status: "fail",
+    message: `Can't find ${req.originalUrl} URL on the server.`,
+  });
+});
+
 module.exports = app;
