@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import FormControl from "../../components/UI/FormControl/FormControl";
 import FormWrapper from "../../components/UI/FormWrapper/FormWrapper";
 
-const Login = () => {
+const Signup = () => {
   // Hook Calls
   const {
     register,
@@ -17,15 +17,28 @@ const Login = () => {
   const formControls = [
     {
       id: 1,
+      label: "Your Fullname",
+      type: "text",
+      inputConfig: {
+        ...register("fullName", {
+          required: "You have to provide your fullname",
+        }),
+      },
+      error: errors?.fullName,
+    },
+    {
+      id: 2,
       label: "Your Email",
       type: "email",
       inputConfig: {
-        ...register("email", { required: "You have to provide your email" }),
+        ...register("email", {
+          required: "You have to provide your email",
+        }),
       },
       error: errors?.email,
     },
     {
-      id: 2,
+      id: 3,
       label: "Password",
       type: "password",
       inputConfig: {
@@ -38,6 +51,21 @@ const Login = () => {
         }),
       },
       error: errors?.password,
+    },
+    {
+      id: 4,
+      label: "Confirm Password",
+      type: "password",
+      inputConfig: {
+        ...register("confirmPassword", {
+          required: "Please confirm your password",
+          minLength: {
+            value: 8,
+            message: "Password should be more or equal 8 charecters",
+          },
+        }),
+      },
+      error: errors?.confirmPassword,
     },
   ];
 
@@ -71,9 +99,9 @@ const Login = () => {
           />
         </form>
         <p>
-          New to <strong>Tech Hub? </strong>Please
-          <Link to="/signup" className="p-0 pl-1 text-blue-500">
-            Signup
+          Already have an account?Please
+          <Link to="/login" className="p-0 pl-1 text-blue-500">
+            Login
           </Link>
         </p>
       </FormWrapper>
@@ -81,4 +109,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
